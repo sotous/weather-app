@@ -1,16 +1,18 @@
 import Link from "next/link"
+import Heading from "./components/Heading";
+import WeatherIllustration from "./components/WeatherIllustration";
+import Footer from "./components/Footer";
+import Finder from "./components/Finder";
 
 const Page = () => {
     return (
-    //    <div className="flex flex-nowrap justify-center items-center">
-    //     <div>
-    //         <h3>Cupertino</h3>
-    //         <p>Light rain</p>
-    //     </div>
-    //    </div>
-    <h1 className="text-3xl font-bold underline">
-      Hello world!
-    </h1>
+       <div className="flex flex-col justify-center items-center p-[3rem]">
+        <Finder/>
+        <hr></hr>
+        <Heading/>
+        <WeatherIllustration/>
+        <Footer/>
+       </div>
     );
 };
 
