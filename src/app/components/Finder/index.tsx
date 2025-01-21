@@ -34,7 +34,9 @@ const Finder = ({ setPlace }: FinderProps) => {
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Find places..." />}
         onChange={(e, value) => {
-          setPlace(value as Place);
+          if (value) {
+            setPlace(value as Place);
+          }
         }}
       />
     </div>
