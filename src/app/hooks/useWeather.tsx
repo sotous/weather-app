@@ -1,32 +1,45 @@
 "use client";
-
-export type WeatherForecast = {
-  current: {
-    temperature_2m: number;
-    precipitation: number;
-    rain: number;
-    showers: number;
-    snowfall: number;
-    wind_speed_10m: number;
-    wind_direction_10m: number;
-    cloud_cover: number;
-    is_day: number;
-    sunshine_duration: number;
-    lightning_potential: number | null;
-  };
-  apparent_temperature_max: number[];
-  apparent_temperature_min: number[];
-};
-export type CurrentConditions = {
-  minTemp: number;
-  maxTemp: number;
-  currentTemp: number;
-  windSpeed: number;
-  windDirection: string;
-  condition: string;
-};
+import { OpenMeteoResponse } from "../types/openMeteo";
+import { Forecast } from "../types/weather";
 
 const useWeather = () => {
-  const url = ``;
+  const getForecast = async (lat: string, lon: string): Promise<Forecast | null> => {
+    /**
+     * 10m for Wind Speed, Wind Gusts and Wind Direction is set by default.
+     * As 10m means that the API is delivering the wind data based on that altitude, 10 meters.
+     */
+    const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=apparent_temperature_max&daily=apparent_temperature_min&timezone=auto&current=temperature_2m&current=precipitation&current=rain&current=showers&current=snowfall&current=wind_speed_10m&current=wind_direction_10m&current=wind_gusts_10m&current=cloud_cover&current=is_day`;
+    let forecast = null;
+    try {
+      const response = await fetch(url);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}, ${response.statusText}`);
+      }
+      const data: OpenMeteoResponse = await response.json();
+
+      forecast = {
+        current: {
+          temperature_2m: data.current.temperature_2m,
+          precipitation: data.current.precipitation,
+          rain: data.current.rain,
+          showers: data.current.showers,
+          snowfall: data.current.snowfall,
+          wind_speed_10m: data.current.wind_speed_10m,
+          wind_direction_10m: data.current.wind_direction_10m,
+          cloud_cover: data.current.cloud_cover,
+          is_day: data.current.is_day,
+          sunshine_duration: data.current.sunshine_duration,
+          lightning_potential: data.current.lightning_potential,
+        },
+        apparent_temperature_max: data.daily.apparent_temperature_max,
+        apparent_temperature_min: data.daily.apparent_temperature_min,
+      };
+    } catch (error) {
+      console.error(error);
+    } finally {
+      return forecast;
+    }
+  };
+  return { getForecast };
 };
 export default useWeather;
