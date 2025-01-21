@@ -21,5 +21,5 @@ export type CurrentConditions = {
   currentTemp: number;
   windSpeed: number;
   windDirection: string;
-  condition: string;
+  condition: string; // Write conditions map.
 };
