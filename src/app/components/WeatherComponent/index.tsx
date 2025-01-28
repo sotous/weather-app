@@ -35,7 +35,7 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
         minTemp: Math.min(...(forecastData?.apparent_temperature_min || [])) ^ 0,
         maxTemp: Math.max(...(forecastData?.apparent_temperature_max || [])) ^ 0,
         currentTemp: forecastData?.current.temperature_2m ?? 0,
-        condition: "",
+        condition: Conditions.CLEAR_DAY,
         windSpeed: forecastData?.current.wind_speed_10m ?? 0,
         // If not available pass an invalid value to set N/A
         windDirection: getWindDirection(forecastData?.current.wind_direction_10m ?? 361),
