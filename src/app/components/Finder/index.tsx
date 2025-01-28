@@ -11,15 +11,14 @@ type FinderProps = {
 };
 
 const Finder = ({ setPlace }: FinderProps) => {
-  const { getPlaces } = useSearch();
-  const [debouncedCallApi] = useState(() => debounce(getPlaces, 300));
+  const { getPlacesByName } = useSearch();
+  const [debouncedCallApi] = useState(() => debounce(getPlacesByName, 300));
   const [finderOptions, setFinderOptions] = useState<Place[]>([]);
 
   const findPlaces = async (query: string) => {
     if (query !== "") {
       const places = await debouncedCallApi(query);
       setFinderOptions(places ?? []);
-      console.log(finderOptions);
     }
   };
 
