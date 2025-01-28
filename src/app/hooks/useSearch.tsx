@@ -1,6 +1,7 @@
 "use client";
 
 export type Place = {
+  place_id: string;
   lat: string;
   lon: string;
   name: string;
