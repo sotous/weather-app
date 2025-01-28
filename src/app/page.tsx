@@ -33,16 +33,6 @@ const Page = () => {
       });
     }
   }, []);
-
-  // if (navigator.geolocation) {
-  //     const currentLocation = await navigator.geolocation.getCurrentPosition((location) =>{
-  //         console.log("current location", location);
-  //     }, (err) => {
-  //         console.error("!!! Couln't get location", err);
-  //     });
-  // } else {
-  //     console.error("Navigator not supported.");
-  // }
   return (
     <div className="flex flex-col justify-center items-center p-[3rem]">
       <Finder setPlace={setPlace} />
