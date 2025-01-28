@@ -42,6 +42,32 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
     })();
   }, [place]);
 
+  const getWindDirection = (degree: number): CardinalPoints => {
+    const cardinalMap = [
+      { min: 348, max: 360, direction: CardinalPoints.N },
+      { min: 0, max: 12, direction: CardinalPoints.N },
+      { min: 23, max: 68, direction: CardinalPoints.NE },
+      { min: 68, max: 113, direction: CardinalPoints.E },
+      { min: 113, max: 158, direction: CardinalPoints.SE },
+      { min: 158, max: 203, direction: CardinalPoints.S },
+      { min: 203, max: 248, direction: CardinalPoints.SW },
+      { min: 248, max: 293, direction: CardinalPoints.W },
+      { min: 293, max: 348, direction: CardinalPoints.NW },
+    ];
+    for (let i = 0; i < cardinalMap.length; i++) {
+      const range = cardinalMap[i];
+
+      // Check if the degree falls within the range
+      if (
+        (degree >= range.min && degree <= range.max) ||
+        (range.min > range.max && (degree >= range.min || degree <= range.max))
+      ) {
+        return range.direction;
+      }
+    }
+    return CardinalPoints.NA;
+  };
+
   return (
     <>
       <p className="uppercase text-xs text-slate-600 text-center">{Conditions.CLEAR_DAY}</p>
