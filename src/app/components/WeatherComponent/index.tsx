@@ -33,7 +33,7 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
       // Grab the available data from forecast to set current conditions.
       setCurrentConditions({
         minTemp: Math.min(...(forecastData?.apparent_temperature_min || [])) ^ 0,
-        maxTemp: 0,
+        maxTemp: Math.min(...(forecastData?.apparent_temperature_max || [])) ^ 0,
         currentTemp: forecastData?.current.temperature_2m ?? 0,
         condition: "",
         windSpeed: forecastData?.current.wind_speed_10m ?? 0,
