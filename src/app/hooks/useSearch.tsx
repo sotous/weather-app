@@ -9,10 +9,10 @@ export type Place = {
 };
 
 const useSearch = () => {
-  const url = `https://nominatim.openstreetmap.org/search`;
-  const getPlaces = async (query: string) => {
+  const url = `https://nominatim.openstreetmap.org/`;
+  const getPlacesByName = async (query: string) => {
     try {
-      const response = await fetch(`${url}?q=${query}&format=json`);
+      const response = await fetch(`${url}search?q=${query}&format=jsonv2`);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}, ${response.statusText}`);
       }
@@ -22,6 +22,19 @@ const useSearch = () => {
       console.error(error);
     }
   };
-  return { getPlaces };
+
+  const getPlaceByCoords = async (lat: number, lon: number) => {
+    try {
+      const response = await fetch(`${url}reverse?lat=${lat}&lon=${lon}&format=jsonv2`);
+      if (!response.ok) {
+        throw new Error(`Response status: ${response.status}, ${response.statusText}`);
+      }
+      const foundPlace = await response.json();
+      return foundPlace;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  return { getPlacesByName, getPlaceByCoords };
 };
 export default useSearch;
