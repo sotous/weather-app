@@ -32,6 +32,13 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
 
   return (
     <>
+      <p className="uppercase text-xs text-slate-600 text-center">{Conditions.CLEAR_DAY}</p>
+      <Image
+        src={`${getConditionAnimation(currentConditions?.condition ?? Conditions.CLEAR_DAY)}`}
+        width={175}
+        height={175}
+        alt="Weather Condition"
+      />
       <div className="flex flex-col pt-10 text-gray-400 text-[10px]">
         <div className="flex justify-between items-center gap-x-2">
           <Image src={"/assets/img/thermometer.svg"} width={12} height={12} alt="Thermometer" />
