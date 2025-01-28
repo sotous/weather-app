@@ -17,8 +17,9 @@ const Finder = ({ setPlace }: FinderProps) => {
 
   const findPlaces = async (query: string) => {
     if (query !== "") {
-      const places = (await debouncedCallApi(query)) ?? [];
-      setFinderOptions(places);
+      const places = await debouncedCallApi(query);
+      setFinderOptions(places ?? []);
+      console.log(finderOptions);
     }
   };
 
@@ -26,10 +27,12 @@ const Finder = ({ setPlace }: FinderProps) => {
     <div className="p-[1.5rem]">
       <Autocomplete
         freeSolo
-        onKeyUp={(e: React.SyntheticEvent) => {
+        onInputChange={(e: React.SyntheticEvent) => {
           findPlaces((e.target as HTMLInputElement).value);
         }}
         options={finderOptions}
+        filterOptions={(x) => x} // Disable internal filtering
+        getOptionKey={(option) => (option as Place).place_id}
         getOptionLabel={(option) => (option as Place).display_name}
         sx={{ width: 300 }}
         renderInput={(params) => <TextField {...params} label="Find places..." />}
