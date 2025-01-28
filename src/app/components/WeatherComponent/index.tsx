@@ -37,7 +37,8 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
         currentTemp: forecastData?.current.temperature_2m ?? 0,
         condition: "",
         windSpeed: forecastData?.current.wind_speed_10m ?? 0,
-        windDirection: "N/A",
+        // If not available pass an invalid value to set N/A
+        windDirection: getWindDirection(forecastData?.current.wind_direction_10m ?? 361),
       });
     })();
   }, [place]);
