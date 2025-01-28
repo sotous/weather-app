@@ -81,18 +81,19 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
       <div className="flex flex-col pt-10 text-gray-400 text-[10px]">
         <div className="flex justify-between items-center gap-x-2">
           <Image src={"/assets/img/thermometer.svg"} width={12} height={12} alt="Thermometer" />
-          <div>10°</div>
+          <div>{currentConditions?.minTemp}°</div>
           <div>/</div>
           <div className="text-black text-base font-semibold">
             {parseInt(`${currentConditions?.currentTemp ?? 0}`)}°
           </div>
           <div>/</div>
-          <div>25°</div>
+          <div>{currentConditions?.maxTemp}°</div>
         </div>
         <div className="flex flex-row items-center">
           <Image src={"/assets/img/wind.svg"} width={20} height={20} alt="Wind" />
           <p className="text-center">
-            {parseInt(`${currentConditions?.windSpeed ?? 0}`)} km/h, SE direction
+            {parseInt(`${currentConditions?.windSpeed ?? 0}`)} km/h,{" "}
+            {currentConditions?.windDirection} direction
           </p>
         </div>
       </div>
