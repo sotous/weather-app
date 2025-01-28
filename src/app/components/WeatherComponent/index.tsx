@@ -4,7 +4,8 @@ import { useEffect, useState } from "react";
 
 import { Place } from "@/app/hooks/useSearch";
 import useWeather from "@/app/hooks/useWeather";
-import { CurrentConditions, Forecast } from "@/app/types/weather";
+import { Conditions, CurrentConditions } from "@/app/types/weather";
+import { getConditionAnimation } from "@/app/utils/conditionAnimationManager";
 
 type WeatherComponentProps = {
   place: Place;
