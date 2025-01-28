@@ -5,7 +5,6 @@ import { useEffect, useState } from "react";
 import Finder from "./components/Finder";
 import Heading from "./components/Heading";
 import WeatherComponent from "./components/WeatherComponent";
-import WeatherIllustration from "./components/WeatherIllustration";
 import { Place } from "./hooks/useSearch";
 
 const Page = () => {
@@ -40,7 +39,6 @@ const Page = () => {
       <Finder setPlace={setPlace} />
       <hr></hr>
       <Heading place={place} setLoading={setLoading} />
-      <WeatherIllustration />
       <WeatherComponent place={place} />
     </div>
   );
