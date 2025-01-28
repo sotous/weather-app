@@ -5,10 +5,11 @@ import { useEffect, useState } from "react";
 import Finder from "./components/Finder";
 import Heading from "./components/Heading";
 import WeatherComponent from "./components/WeatherComponent";
-import { Place } from "./hooks/useSearch";
+import useSearch, { Place } from "./hooks/useSearch";
 
 const Page = () => {
   const [place, setPlace] = useState<Place>({
+    place_id: "1",
     lat: "10.6746542",
     lon: "-71.6104397",
     name: "Maracaibo, VE",
@@ -17,10 +18,18 @@ const Page = () => {
 
   const [loading, setLoading] = useState<boolean>(true);
 
+  const { getPlaceByCoords } = useSearch();
+
   useEffect(() => {
     if (navigator.geolocation) {
-      navigator.geolocation.getCurrentPosition((location: any) => {
-        console.log(location);
+      navigator.geolocation.getCurrentPosition((location: GeolocationPosition) => {
+        (async () => {
+          const foundPlace = await getPlaceByCoords(
+            location.coords.latitude,
+            location.coords.longitude
+          );
+          setPlace(foundPlace);
+        })();
       });
     }
   }, []);
