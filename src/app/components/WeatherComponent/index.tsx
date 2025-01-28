@@ -10,6 +10,18 @@ type WeatherComponentProps = {
   place: Place;
 };
 
+enum CardinalPoints {
+  N = "N",
+  W = "W",
+  E = "E",
+  S = "S",
+  NE = "NE",
+  NW = "NW",
+  SE = "SE",
+  SW = "SW",
+  NA = "N/A",
+}
+
 const WeatherComponent = ({ place }: WeatherComponentProps) => {
   const { getForecast } = useWeather();
   const [currentConditions, setCurrentConditions] = useState<CurrentConditions>();
