@@ -33,6 +33,7 @@ export type OpenMeteoResponse = {
     is_day: number;
     sunshine_duration: number;
     lightning_potential: number | null;
+    weather_code: number;
   };
   daily_units: {
     time: string;
