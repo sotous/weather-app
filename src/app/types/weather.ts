@@ -4,8 +4,11 @@ export type Forecast = {
     wind_speed_10m: number;
     wind_direction_10m: number;
     cloud_cover: number;
+    cloud_cover_low: number;
     is_day: number;
     weather_code: number;
+    lightning_potential: number;
+    snowfall: number;
   };
   apparent_temperature_max: number[];
   apparent_temperature_min: number[];
