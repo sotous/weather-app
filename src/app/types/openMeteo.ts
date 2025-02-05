@@ -30,6 +30,7 @@ export type OpenMeteoResponse = {
     wind_direction_10m: number;
     wind_gusts_10m: number;
     cloud_cover: number;
+    cloud_cover_low: number;
     is_day: number;
     sunshine_duration: number;
     lightning_potential: number | null;
