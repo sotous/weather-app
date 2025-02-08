@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Place } from "@/app/hooks/useSearch";
 import useWeather from "@/app/hooks/useWeather";
-import { Conditions, CurrentConditions } from "@/app/types/weather";
+import { Conditions, CurrentConditions, Forecast, WEATHER_CODE_MAP } from "@/app/types/weather";
 import { getConditionAnimation } from "@/app/utils/conditionAnimationManager";
 
 type WeatherComponentProps = {
@@ -43,6 +43,44 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
       });
     })();
   }, [place]);
+
+  const getCurrentCondition = (forecast: Forecast): Conditions => {
+    const currentConditionOptions = WEATHER_CODE_MAP[forecast.current.weather_code] ?? [];
+    let currentCondition = currentConditionOptions[0] ?? Conditions.CLEAR_DAY;
+
+    // Check winds first.
+    if (currentConditions?.windSpeed && currentConditions?.windSpeed > 29) {
+      return Conditions.WIND;
+    }
+
+    // Check if the code has a single condition option.
+    if (currentConditionOptions.length === 1) {
+      return currentCondition;
+    }
+
+    // Check day or night conditions.
+    // Having accountability for day is the left side of the array and night the right side of the array.
+    if (currentCondition.length === 2) {
+    }
+
+    const partlyCloudy = forecast.current.cloud_cover > 37 && forecast.current.cloud_cover < 63;
+    const cloudy = forecast.current.cloud_cover > 63;
+
+    switch (forecast.current.weather_code) {
+      // Cloud cover 100.
+      case 3:
+        break;
+      // Partly Cloud.
+      case 45:
+      case 48:
+        break;
+      // Partly cloud for day or night thunderstorms.
+      case 95:
+        break;
+    }
+
+    return currentCondition;
+  };
 
   const getWindDirection = (degree: number): CardinalPoints => {
     const cardinalMap = [
