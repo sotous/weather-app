@@ -25,7 +25,7 @@ export type CurrentConditions = {
 export enum Conditions {
   CLEAR_DAY = "clear_day", //0
   CLEAR_NIGHT = "clear_night", //0
-  CLOUDY = "cloudy", //3
+  CLOUDY = "cloudy", //3 and cloud_cover 100
   OVERCAST_DAY = "overcast_day", //3
   OVERCAST_NIGHT = "overcast_night", //3
   PARTLY_CLOUDY_DAY = "partly_cloudy_day", //2
@@ -42,7 +42,7 @@ export enum Conditions {
   PARTLY_CLOUDY_NIGHT_RAIN = "partly_cloudy_night_rain", // 80, 81, 82 and cloud cover
   PARTLY_CLOUDY_NIGHT_SLEET = "partly_cloudy_night_sleet", // 66, 67 and cloud cover
   PARTLY_CLOUDY_NIGHT_SNOW = "partly_cloudy_night_snow", // 77, 85, 86 and cloud cover
-  PARTLY_CLOUDY_NIGHT_FOG = "partly_cloudy_night_fog", // cloud_cover_low and cloud_cover
+  PARTLY_CLOUDY_NIGHT_FOG = "partly_cloudy_night_fog", // 45, 48 cloud_cover
   PARTLY_CLOUDY_NIGHT_HAZE = "partly_cloudy_night_haze",
   DRIZZLE = "drizzle", // 51, 53, 55 cloud_cover 100
   HAIL = "hail", // 99 cloud_cover 100
@@ -60,13 +60,44 @@ export enum Conditions {
   THUNDERSTORMS_NIGHT = "thunderstorms_night", // 95
   THUNDERSTORMS_NIGHT_RAIN = "thunderstorms_night_rain", // 96
   THUNDERSTORMS_NIGHT_SNOW = "thunderstorms_night_snow", // Lighting potential, cloud cover and snow_fall
-  FOG = "fog", // cloud_cover_low 100
-  FOG_DAY = "fog_day", // cloud_cover_low
-  FOG_NIGHT = "fog_night", // cloud_cover_low
+  FOG = "fog", // 45, 48 cloud_cover 100
+  FOG_DAY = "fog_day", // 45, 48
+  FOG_NIGHT = "fog_night", // 45, 48
   HAZE = "haze",
   HAZE_DAY = "haze_day",
   HAZE_NIGHT = "haze_night",
 }
+
+export const WEATHER_CODE_MAP: Record<number, Conditions[]> = {
+  0: [Conditions.CLEAR_DAY, Conditions.CLEAR_NIGHT],
+  1: [Conditions.CLEAR_DAY],
+  2: [Conditions.PARTLY_CLOUDY_DAY],
+  3: [Conditions.CLOUDY, Conditions.OVERCAST_DAY, Conditions.OVERCAST_NIGHT], // Cloud cover 100
+  45: [Conditions.FOG, Conditions.FOG_DAY, Conditions.FOG_NIGHT, Conditions.PARTLY_CLOUDY_DAY_FOG], // Cloud cover
+  48: [Conditions.FOG, Conditions.FOG_DAY, Conditions.FOG_NIGHT, Conditions.PARTLY_CLOUDY_DAY_FOG], // Cloud cover
+  51: [Conditions.PARTLY_CLOUDY_DAY_DRIZZLE, Conditions.PARTLY_CLOUDY_NIGHT_DRIZZLE],
+  53: [Conditions.PARTLY_CLOUDY_DAY_DRIZZLE, Conditions.PARTLY_CLOUDY_NIGHT_DRIZZLE],
+  55: [Conditions.DRIZZLE],
+  56: [Conditions.DRIZZLE],
+  57: [Conditions.DRIZZLE],
+  61: [Conditions.PARTLY_CLOUDY_DAY_RAIN, Conditions.PARTLY_CLOUDY_NIGHT_RAIN],
+  63: [Conditions.RAIN],
+  65: [Conditions.THUNDERSTORMS_RAIN],
+  66: [Conditions.PARTLY_CLOUDY_DAY_SLEET, Conditions.PARTLY_CLOUDY_NIGHT_SLEET],
+  67: [Conditions.SLEET],
+  71: [Conditions.PARTLY_CLOUDY_NIGHT_SNOW, Conditions.PARTLY_CLOUDY_NIGHT_SNOW],
+  73: [Conditions.SNOW],
+  75: [Conditions.THUNDERSTORMS_DAY_SNOW],
+  77: [Conditions.SNOW],
+  80: [Conditions.PARTLY_CLOUDY_DAY_RAIN, Conditions.PARTLY_CLOUDY_NIGHT_RAIN],
+  81: [Conditions.RAIN],
+  82: [Conditions.THUNDERSTORMS_DAY_RAIN],
+  85: [Conditions.PARTLY_CLOUDY_NIGHT_SNOW, Conditions.PARTLY_CLOUDY_NIGHT_SNOW],
+  86: [Conditions.SNOW],
+  95: [Conditions.THUNDERSTORMS, Conditions.THUNDERSTORMS_DAY, Conditions.THUNDERSTORMS_NIGHT], // Cloud Cover
+  96: [Conditions.THUNDERSTORMS],
+  99: [Conditions.THUNDERSTORMS],
+};
 
 /**
  * - First we will check no code conditions
