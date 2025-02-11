@@ -13,7 +13,7 @@ export type Forecast = {
   apparent_temperature_max: number[];
   apparent_temperature_min: number[];
 };
-export type CurrentConditions = {
+export type MeteorologicalParams = {
   minTemp: number;
   maxTemp: number;
   currentTemp: number;
@@ -72,9 +72,9 @@ export const WEATHER_CODE_MAP: Record<number, Conditions[]> = {
   0: [Conditions.CLEAR_DAY, Conditions.CLEAR_NIGHT],
   1: [Conditions.CLEAR_DAY],
   2: [Conditions.PARTLY_CLOUDY_DAY],
-  3: [Conditions.CLOUDY, Conditions.OVERCAST_DAY, Conditions.OVERCAST_NIGHT], // Cloud cover 100
-  45: [Conditions.FOG, Conditions.FOG_DAY, Conditions.FOG_NIGHT, Conditions.PARTLY_CLOUDY_DAY_FOG], // Cloud cover
-  48: [Conditions.FOG, Conditions.FOG_DAY, Conditions.FOG_NIGHT, Conditions.PARTLY_CLOUDY_DAY_FOG], // Cloud cover
+  3: [Conditions.CLOUDY, Conditions.OVERCAST_DAY, Conditions.OVERCAST_NIGHT],
+  45: [Conditions.FOG, Conditions.FOG_DAY, Conditions.FOG_NIGHT, Conditions.PARTLY_CLOUDY_DAY_FOG],
+  48: [Conditions.FOG, Conditions.FOG_DAY, Conditions.FOG_NIGHT, Conditions.PARTLY_CLOUDY_DAY_FOG],
   51: [Conditions.PARTLY_CLOUDY_DAY_DRIZZLE, Conditions.PARTLY_CLOUDY_NIGHT_DRIZZLE],
   53: [Conditions.PARTLY_CLOUDY_DAY_DRIZZLE, Conditions.PARTLY_CLOUDY_NIGHT_DRIZZLE],
   55: [Conditions.DRIZZLE],
@@ -94,14 +94,7 @@ export const WEATHER_CODE_MAP: Record<number, Conditions[]> = {
   82: [Conditions.THUNDERSTORMS_DAY_RAIN],
   85: [Conditions.PARTLY_CLOUDY_DAY_SNOW, Conditions.PARTLY_CLOUDY_NIGHT_SNOW],
   86: [Conditions.SNOW],
-  95: [Conditions.THUNDERSTORMS, Conditions.THUNDERSTORMS_DAY, Conditions.THUNDERSTORMS_NIGHT], // Cloud Cover
+  95: [Conditions.THUNDERSTORMS, Conditions.THUNDERSTORMS_DAY, Conditions.THUNDERSTORMS_NIGHT],
   96: [Conditions.THUNDERSTORMS],
   99: [Conditions.THUNDERSTORMS],
 };
-
-/**
- * - First we will check no code conditions
- * - Then we will check cloud_cover 100 conditions
- * - Later, we'll check cloud_cover below 100 conditions
- * - Then we'll check day or night conditions
- */
