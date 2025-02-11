@@ -25,18 +25,20 @@ enum CardinalPoints {
 
 const WeatherComponent = ({ place }: WeatherComponentProps) => {
   const { getForecast } = useWeather();
-  const [currentConditions, setCurrentConditions] = useState<CurrentConditions>();
+  const [metorologicalParams, setMeteorologicalParams] = useState<MeteorologicalParams>();
 
   // On place changes, fetch forecast.
   useEffect(() => {
     (async () => {
       const forecastData = await getForecast(place.lat, place.lon);
+      // Get current condition
+      const currentCondition = getCurrentCondition(forecastData as Forecast);
       // Grab the available data from forecast to set current conditions.
-      setCurrentConditions({
+      setMeteorologicalParams({
         minTemp: Math.min(...(forecastData?.apparent_temperature_min || [])) ^ 0,
         maxTemp: Math.max(...(forecastData?.apparent_temperature_max || [])) ^ 0,
         currentTemp: forecastData?.current.temperature_2m ?? 0,
-        condition: Conditions.CLEAR_DAY,
+        condition: currentCondition,
         windSpeed: forecastData?.current.wind_speed_10m ?? 0,
         // If not available pass an invalid value to set N/A
         windDirection: getWindDirection(forecastData?.current.wind_direction_10m ?? 361),
