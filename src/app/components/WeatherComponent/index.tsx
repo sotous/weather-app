@@ -4,7 +4,7 @@ import { useEffect, useState } from "react";
 
 import { Place } from "@/app/hooks/useSearch";
 import useWeather from "@/app/hooks/useWeather";
-import { Conditions, CurrentConditions, Forecast, WEATHER_CODE_MAP } from "@/app/types/weather";
+import { Conditions, Forecast, MeteorologicalParams, WEATHER_CODE_MAP } from "@/app/types/weather";
 import { getConditionAnimation } from "@/app/utils/conditionAnimationManager";
 
 type WeatherComponentProps = {
@@ -108,9 +108,11 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
 
   return (
     <>
-      <p className="uppercase text-xs text-slate-600 text-center">{Conditions.CLEAR_DAY}</p>
+      <p className="uppercase text-xs text-slate-600 text-center">
+        {metorologicalParams?.condition.replace(/(?:_|DAY)/gi, " ")}
+      </p>
       <Image
-        src={`${getConditionAnimation(currentConditions?.condition ?? Conditions.CLEAR_DAY)}`}
+        src={`${getConditionAnimation(metorologicalParams?.condition ?? Conditions.CLEAR_DAY)}`}
         width={175}
         height={175}
         alt="Weather Condition"
@@ -118,19 +120,19 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
       <div className="flex flex-col pt-10 text-gray-400 text-[10px]">
         <div className="flex justify-between items-center gap-x-2">
           <Image src={"/assets/img/thermometer.svg"} width={12} height={12} alt="Thermometer" />
-          <div>{currentConditions?.minTemp}°</div>
+          <div>{metorologicalParams?.minTemp}°</div>
           <div>/</div>
           <div className="text-black text-base font-semibold">
-            {parseInt(`${currentConditions?.currentTemp ?? 0}`)}°
+            {parseInt(`${metorologicalParams?.currentTemp ?? 0}`)}°
           </div>
           <div>/</div>
-          <div>{currentConditions?.maxTemp}°</div>
+          <div>{metorologicalParams?.maxTemp}°</div>
         </div>
         <div className="flex flex-row items-center">
           <Image src={"/assets/img/wind.svg"} width={20} height={20} alt="Wind" />
           <p className="text-center">
-            {parseInt(`${currentConditions?.windSpeed ?? 0}`)} km/h,{" "}
-            {currentConditions?.windDirection} direction
+            {parseInt(`${metorologicalParams?.windSpeed ?? 0}`)} km/h,{" "}
+            {metorologicalParams?.windDirection} direction
           </p>
         </div>
       </div>
