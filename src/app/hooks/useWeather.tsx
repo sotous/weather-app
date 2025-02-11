@@ -7,6 +7,7 @@ const useWeather = () => {
     /**
      * 10m for Wind Speed, Wind Gusts and Wind Direction is set by default.
      * As 10m means that the API is delivering the wind data based on that altitude, 10 meters.
+     * Same would be for the temperature, which is delivered at 2 meters.
      */
     const url = `https://api.open-meteo.com/v1/forecast?latitude=${lat}&longitude=${lon}&daily=apparent_temperature_max&daily=apparent_temperature_min&timezone=auto&current=temperature_2m&current=wind_speed_10m&current=wind_direction_10m&current=wind_gusts_10m&current=cloud_cover&current=is_day&current=lightning_potential&current=cloud_cover_low&current=snowfall&current=weather_code`;
     let forecast = null;
