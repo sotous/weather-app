@@ -69,13 +69,15 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
       [95, 63],
     ]);
 
-    weatherCodesCloudThresholdMap.forEach((weatherCode, cloudThreshold) => {
-      if (forecast.current.cloud_cover > cloudThreshold) {
+    const cloudCoverThreshold = weatherCodesCloudThresholdMap.get(forecast.current.weather_code);
+
+    // If there is a weather pattern with cloud cover threshold follow the below logic.
+    if (cloudCoverThreshold) {
+      if (forecast.current.cloud_cover > cloudCoverThreshold) {
         return currentConditionOptions[0];
       }
-
       return forecast.current.is_day ? currentConditionOptions[1] : currentConditionOptions[2];
-    });
+    }
 
     return currentCondition;
   };
