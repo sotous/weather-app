@@ -8,7 +8,7 @@ import { Conditions, Forecast, MeteorologicalParams, WEATHER_CODE_MAP } from "@/
 import { getConditionAnimation } from "@/app/utils/conditionAnimationManager";
 
 type WeatherComponentProps = {
-  place: Place;
+  place: Place | null;
 };
 
 enum CardinalPoints {
@@ -30,7 +30,7 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
   // On place changes, fetch forecast.
   useEffect(() => {
     (async () => {
-      const forecastData = await getForecast(place.lat, place.lon);
+      const forecastData = await getForecast(place?.lat ?? "0", place?.lon ?? "0");
       // Get current condition
       const currentCondition = getCurrentCondition(forecastData as Forecast);
       // Grab the available data from forecast to set current conditions.
