@@ -54,8 +54,8 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
     // Then check winds.
     if (
       forecast.current.cloud_cover < 63 &&
-      metorologicalParams?.windSpeed &&
-      metorologicalParams?.windSpeed > 29
+      forecast.current.wind_speed_10m &&
+      forecast.current.wind_speed_10m > 29
     ) {
       return Conditions.WIND;
     }
