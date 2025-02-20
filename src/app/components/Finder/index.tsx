@@ -3,17 +3,20 @@ import { debounce } from "lodash";
 import { Dispatch, SetStateAction, useState } from "react";
 
 import useSearch, { Place } from "@/app/hooks/useSearch";
+import MyLocationIcon from "@mui/icons-material/MyLocation";
 import Autocomplete from "@mui/material/Autocomplete";
+import IconButton from "@mui/material/IconButton";
 import TextField from "@mui/material/TextField";
 
 type FinderProps = {
-  setPlace: Dispatch<SetStateAction<Place>>;
+  setPlace: Dispatch<SetStateAction<Place | null>>;
 };
 
 const Finder = ({ setPlace }: FinderProps) => {
   const { getPlacesByName } = useSearch();
   const [debouncedCallApi] = useState(() => debounce(getPlacesByName, 300));
   const [finderOptions, setFinderOptions] = useState<Place[]>([]);
+  const { getPlaceByCoords } = useSearch();
 
   const findPlaces = async (query: string) => {
     if (query !== "") {
@@ -22,8 +25,22 @@ const Finder = ({ setPlace }: FinderProps) => {
     }
   };
 
+  const getCurrentLocation = () => {
+    if (navigator.geolocation) {
+      navigator.geolocation.getCurrentPosition((location: GeolocationPosition) => {
+        (async () => {
+          const foundPlace = await getPlaceByCoords(
+            location.coords.latitude,
+            location.coords.longitude
+          );
+          setPlace(foundPlace);
+        })();
+      });
+    }
+  };
+
   return (
-    <div className="p-[1.5rem]">
+    <div className="flex gap-x-2 justify-between p-[1.5rem]">
       <Autocomplete
         freeSolo
         onInputChange={(e: React.SyntheticEvent) => {
@@ -41,6 +58,9 @@ const Finder = ({ setPlace }: FinderProps) => {
           }
         }}
       />
+      <IconButton aria-label="get my location" onClick={getCurrentLocation}>
+        <MyLocationIcon />
+      </IconButton>
     </div>
   );
 };
