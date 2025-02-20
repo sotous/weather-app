@@ -69,7 +69,7 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
       [95, 63],
     ]);
 
-    weatherCodesCloudThresholdMap.forEach((cloudThreshold, weatherCode) => {
+    weatherCodesCloudThresholdMap.forEach((weatherCode, cloudThreshold) => {
       if (forecast.current.cloud_cover > cloudThreshold) {
         return currentConditionOptions[0];
       }
