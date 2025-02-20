@@ -50,8 +50,13 @@ const WeatherComponent = ({ place }: WeatherComponentProps) => {
     const currentConditionOptions = WEATHER_CODE_MAP[forecast.current.weather_code] ?? [];
     let currentCondition = currentConditionOptions[0] ?? Conditions.CLEAR_DAY;
 
-    // Check winds first.
-    if (metorologicalParams?.windSpeed && metorologicalParams?.windSpeed > 29) {
+    // If cloud cover is minor the partly cloudy param (63)
+    // Then check winds.
+    if (
+      forecast.current.cloud_cover < 63 &&
+      metorologicalParams?.windSpeed &&
+      metorologicalParams?.windSpeed > 29
+    ) {
       return Conditions.WIND;
     }
 
