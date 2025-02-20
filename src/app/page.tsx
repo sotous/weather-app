@@ -16,16 +16,15 @@ const defaultPlace = {
 };
 
 const Page = () => {
-  const [place, setPlace] = useState<Place | null>(() =>
-    JSON.parse(sessionStorage.getItem("place") || "null")
-  );
+  const [place, setPlace] = useState<Place | null>(null);
 
   useEffect(() => {
-    if (place === null) {
-      return setPlace(defaultPlace);
-    }
+    const storedPlace = JSON.parse(sessionStorage.getItem("place") || "null");
+    setPlace(storedPlace || defaultPlace);
+  }, []);
 
-    if (place !== defaultPlace) {
+  useEffect(() => {
+    if (place !== null && place !== defaultPlace) {
       sessionStorage.setItem("place", JSON.stringify(place));
     }
   }, [place]);
