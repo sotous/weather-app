@@ -70,8 +70,8 @@ export enum Conditions {
 
 export const WEATHER_CODE_MAP: Record<number, Conditions[]> = {
   0: [Conditions.CLEAR_DAY, Conditions.CLEAR_NIGHT],
-  1: [Conditions.CLEAR_DAY],
-  2: [Conditions.PARTLY_CLOUDY_DAY],
+  1: [Conditions.CLEAR_DAY, Conditions.CLEAR_NIGHT],
+  2: [Conditions.PARTLY_CLOUDY_DAY, Conditions.PARTLY_CLOUDY_NIGHT],
   3: [Conditions.CLOUDY, Conditions.OVERCAST_DAY, Conditions.OVERCAST_NIGHT],
   45: [Conditions.FOG, Conditions.FOG_DAY, Conditions.FOG_NIGHT, Conditions.PARTLY_CLOUDY_DAY_FOG],
   48: [Conditions.FOG, Conditions.FOG_DAY, Conditions.FOG_NIGHT, Conditions.PARTLY_CLOUDY_DAY_FOG],
