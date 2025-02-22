@@ -10,15 +10,14 @@ export type Place = {
 
 const useSearch = () => {
   const url = `https://nominatim.openstreetmap.org/`;
-  const getPlacesByName = async (query: string): Promise<Place[]> => {
-    let places: Place[] = [];
+  const getPlacesByName = async (query: string): Promise<Place[] | undefined> => {
+    let places = [];
     try {
       const response = await fetch(`${url}search?q=${query}&format=jsonv2`);
       if (!response.ok) {
         throw new Error(`Response status: ${response.status}, ${response.statusText}`);
       }
       places = await response.json();
-      return places;
     } catch (error) {
       console.error(error);
     } finally {
