@@ -62,6 +62,9 @@ const Finder = ({ setPlace }: FinderProps) => {
         onChange={(e, value) => {
           if (value) {
             setPlace(value as Place);
+            // Blur the input to close the keyboard on mobile
+            const inputElement = e.target as HTMLInputElement;
+            inputElement.blur();
           }
         }}
       />
