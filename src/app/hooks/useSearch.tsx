@@ -1,5 +1,7 @@
 "use client";
 
+import { debounce } from "lodash";
+
 export type Place = {
   place_id: string;
   lat: string;
@@ -8,9 +10,10 @@ export type Place = {
   display_name: string;
 };
 
+const url = `https://nominatim.openstreetmap.org/`;
+
 const useSearch = () => {
-  const url = `https://nominatim.openstreetmap.org/`;
-  const getPlacesByName = async (query: string): Promise<Place[] | undefined> => {
+  const getPlacesByName = async (query: string, callback: (places: Place[]) => void) => {
     let places = [];
     try {
       const response = await fetch(`${url}search?q=${query}&format=jsonv2`);
@@ -18,10 +21,10 @@ const useSearch = () => {
         throw new Error(`Response status: ${response.status}, ${response.statusText}`);
       }
       places = await response.json();
+      callback(places);
     } catch (error) {
       console.error(error);
-    } finally {
-      return places;
+      callback([]);
     }
   };
 
@@ -37,6 +40,11 @@ const useSearch = () => {
       console.error(error);
     }
   };
-  return { getPlacesByName, getPlaceByCoords };
+
+  // Debounce the getPlacesByName function
+  const debouncedGetPlacesByName = debounce(getPlacesByName, 1000);
+
+  return { getPlacesByName: debouncedGetPlacesByName, getPlaceByCoords };
 };
+
 export default useSearch;
