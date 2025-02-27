@@ -1,9 +1,7 @@
 "use client";
-import { debounce } from "lodash";
 import { Dispatch, SetStateAction, useState } from "react";
 
 import useSearch, { Place } from "@/app/hooks/useSearch";
-import { debounceWithLeading } from "@/app/utils/debounce";
 import ClearIcon from "@mui/icons-material/Clear";
 import MyLocationIcon from "@mui/icons-material/MyLocation";
 import Autocomplete from "@mui/material/Autocomplete";
@@ -16,17 +14,21 @@ type FinderProps = {
 };
 
 const Finder = ({ setPlace }: FinderProps) => {
-  const { getPlacesByName } = useSearch();
-  const [debouncedCallApi] = useState(() => debounceWithLeading(getPlacesByName, 2));
   const [finderOptions, setFinderOptions] = useState<Place[]>([]);
   const [loadingOptions, setLoadingOptions] = useState(false);
-  const { getPlaceByCoords } = useSearch();
+  const { getPlaceByCoords, getPlacesByName } = useSearch();
 
-  const findPlaces = async (query: string) => {
+  const findPlaces = (query: string) => {
     if (query !== "") {
-      const places = await debouncedCallApi(query);
-      setFinderOptions(places ?? []);
-      setLoadingOptions(false);
+      if (!loadingOptions) {
+        setLoadingOptions(true);
+      }
+      getPlacesByName(query, (places) => {
+        setFinderOptions(places);
+        setTimeout(() => {
+          setLoadingOptions(false);
+        }, 1000);
+      });
     }
   };
 
@@ -48,10 +50,7 @@ const Finder = ({ setPlace }: FinderProps) => {
     <div className="flex gap-x-2 justify-between p-[1.5rem]">
       <Autocomplete
         freeSolo
-        onKeyUp={(e: React.SyntheticEvent) => {
-          setLoadingOptions(true);
-          findPlaces((e.target as HTMLInputElement).value);
-        }}
+        onKeyUp={(e: React.SyntheticEvent) => findPlaces((e.target as HTMLInputElement).value)}
         clearIcon={loadingOptions ? <CircularProgress size={20} /> : <ClearIcon />}
         options={finderOptions}
         filterOptions={(x) => x} // Disable internal filtering
@@ -62,6 +61,7 @@ const Finder = ({ setPlace }: FinderProps) => {
         onChange={(e, value) => {
           if (value) {
             setPlace(value as Place);
+            setLoadingOptions(false);
             // Blur the input to close the keyboard on mobile
             const inputElement = e.target as HTMLInputElement;
             inputElement.blur();
