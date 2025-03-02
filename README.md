@@ -1,29 +1,28 @@
 # Weather App built with Next.js
 
-This is a simple exercise where I consolidate knowledge about Next.js's capabilities of combining SSR and CSR techniques.
+Weather App Built with Next.js
+This is a simple exercise where I consolidate my knowledge of Next.js’s ability to combine SSR and CSR techniques.
 
-Although exercising these techniques with a Weather app may get the repo beyond the statement above, I wanted to seize this opportunity to put in practice some essential techniques, such as API integration, mapping, indexing, sorting, and parsing data.
+Although building a weather app might make the repository more complex than initially intended, I seized the opportunity to put into practice essential techniques such as API integration, mapping, indexing, sorting, and data parsing.
 
-- The application has a simple place search module that integrates the free version of *Open Street Map* https://nominatim.openstreetmap.org/
-- It also uses a search by coordinates weather module from *Open Meteo*, also its free version https://open-meteo.com/
+The application includes a simple place search module that integrates with the free version of Open Street Map (https://nominatim.openstreetmap.org/).
+It also uses a weather module that searches by coordinates from Open Meteo, also in its free version (https://open-meteo.com/).
 
-### How does it work?
+### How Does It Work?
 
-The app maps the coordinates to a weather search by catching the user's input. The user's input will trigger the search on the Open Street Map API, which will throw results on that search. Then, the user chooses the option that most aligns with his or her intention, which will catch an option that includes the name and coordinates of the place the user is looking for.
+The app captures the user's input and uses it to trigger a search on the Open Street Map API, which returns results matching the query. The user then selects the option that best matches their intended location, which provides the name and coordinates of that place.
 
-Once we get the coordinates of the place, we trigger the Open Meteo API with those coordinates, returning us the specific weather for that exact location. This impressed me with my little knowledge about Weather APIs. My perspective is that this makes Open Meteo API a very powerful weather app.
+Once the coordinates are obtained, the app calls the Open Meteo API with those values, which returns the specific weather for that location. I was pleasantly surprised by what could be achieved with my modest knowledge of weather APIs—this makes the Open Meteo API a very powerful tool for building weather apps.
 
-After we get Open Meteo's response, we parse all the data and map the weather conditions to Weather Icons, which were taken from here: https://bas.dev/work/meteocons
+After receiving the response from Open Meteo, we parse the data and map the weather conditions to icons taken from Meteocons.
 
-Thank you so much @basmilius, for building those weather icons and exposing them freely to the public; it definitely made my practice more fun.
+A big thank you to @basmilius for creating these weather icons and making them freely available to the public—it certainly made my project more enjoyable.
 
-As a last note, with this exercise, I couldn't help but notice that searching weather of very distant places like the Aconcagua Peak, or the peaks at the Andes Mountains in Venezuela or Colombia with this combination of APIs is indeed easier than searching those places directly in normal weather apps (Apple's, Weather Underground, Weather Channel). I have an obsession about searching for weather data everywhere I go, and in very distant places in Venezuela it wasn't possible to do, at least not before today's technology like Zoom Earth | https://zoom.earth/ for example.
+As a final note, while working on this exercise I couldn’t help but notice that searching for weather in remote locations—such as Aconcagua Peak or the Andes Mountains in Venezuela or Colombia—is much easier with this combination of APIs than with standard weather apps (Apple’s, Weather Underground, Weather Channel). I’m obsessed with tracking weather data wherever I go, and in remote areas of Venezuela it used to be nearly impossible—until technologies like Zoom Earth emerged.
 
-However, on the everyday weather apps, the weather results for small towns in distant regions aren't still very smooth to find. Maybe the freedom to map coordinates to places with these two APIs, instead of just looking through a private vendor's database, makes this fun little feature possible.
+However, in everyday weather apps, finding weather information for small towns in distant regions can still be challenging. Perhaps the ability to directly map coordinates to places using these two APIs—rather than relying solely on a private vendor's database—makes this fun little feature possible.
 
-Here's a demo to those distant places search:
-
-![image](https://github.com/user-attachments/assets/4fabf347-edb1-4939-9516-9a37364cf4fc)
+Feel free to test the app here: https://weather-app-theta-dun.vercel.app
 
 
 
