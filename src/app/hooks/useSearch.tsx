@@ -24,7 +24,7 @@ const useSearch = () => {
       callback(places);
     } catch (error) {
       console.error(error);
-      callback([]);
+      callback(places);
     }
   };
 
