@@ -1,6 +1,5 @@
 # Weather App built with Next.js
 
-Weather App Built with Next.js
 This is a simple exercise where I consolidate my knowledge of Next.js’s ability to combine SSR and CSR techniques.
 
 Although building a weather app might make the repository more complex than initially intended, I seized the opportunity to put into practice essential techniques such as API integration, mapping, indexing, sorting, and data parsing.
